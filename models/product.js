@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var ProductSchema = new Schema(
   {
     name: { type: String, required: true, minLength: 2, maxLength: 100 },
-    summary: { type: String, maxLength: 200 },
+    description: { type: String, maxLength: 100 },
     quantity: { type: Number, default: 0 },
     date_added: { type: Date, default: new Date },
     category: [{ type: Schema.Types.ObjectId, ref: 'Category'}]
