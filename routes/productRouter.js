@@ -10,11 +10,11 @@ var product_controller = require('../controllers/productController');
 // GET request for list of all Product items.
 router.get('/', product_controller.products_list);
 
-// // GET request for creating a Product. NOTE This must come before routes that display Product (uses id).
-// router.get('/add', product_controller.product_add_get);
+// GET request for creating a Product. NOTE This must come before routes that display Product (uses id).
+router.get('/add', product_controller.product_add_get);
 
 // // POST request for creating Product.
-// router.post('/add', product_controller.product_add_post);
+router.post('/add', product_controller.product_add_post);
 
 // // GET request to delete Product.
 // router.get('/:id/delete', product_controller.product_delete_get);

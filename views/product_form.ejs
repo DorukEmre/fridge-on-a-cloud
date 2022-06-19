@@ -1,0 +1,52 @@
+<%- include('partials/head.ejs') %>
+	<title><%= title %> | Fridge on a cloud</title>
+</head>
+<body>
+	<%- include('partials/sidebar.ejs') %>
+
+	<h1><%= title %></h1>
+	
+  <!-- name: description:  quantity:  date_added:  category -->
+
+  <form action="" method="post">
+    <div class="form-group">
+
+    <label for="name">Product name</label>
+    <input type="text" name="name" id="name"  class="form-control" required>
+      
+    <label for="imgsrc">Image</label><p></p>
+    <input type="file" name="imgsrc" id="imgsrc">
+    <p></p>
+    <label for="quantity">Quantity</label>
+    <input type="number" name="quantity" id="quantity" min="0" value="1" class="form-control">
+
+    <label for="date_added">Date Added</label>
+    <input type="date" name="date_added" id="date_added" value="" class="form-control">
+    <p></p>
+
+    <label for="category">Category</label>
+    <select name="category" id="category" class="form-control" placeholder='Select category'>
+        <% cat.sort(function(a, b) {
+            let textA = a.name.toUpperCase(); 
+            let textB = b.name.toUpperCase(); 
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        }); %> 
+
+        <% for( let i = 0; i < cat.length; i++ ) { %>        
+                <option value="<%= cat[i]._id %>"><%= cat[i].name %></option> 
+        <% } %>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    </div>
+  </form>
+  <% if (typeof errors != 'undefined') { %>
+    <ul>
+        <% for( let i = 0; i < errors.length; i++ ) { %>
+            <li><%= errors[i].msg %></li>
+        <% } %>
+    </ul>
+  <% } %>
+
+<%- include('partials/footer.ejs') %>

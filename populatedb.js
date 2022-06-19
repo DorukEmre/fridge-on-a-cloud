@@ -39,10 +39,10 @@ function categoryCreate(name, description, cb) {
   }   );
 }
 
-function productCreate(name, description, quantity, date_added, category, cb) {
+function productCreate(name, imgsrc, quantity, date_added, category, cb) {
   productdetail = { 
     name: name,
-    description: description,
+    imgsrc: imgsrc,
     quantity: quantity,
     date_added: date_added
   }
@@ -82,28 +82,28 @@ function createCategories(cb) {
 function createProducts(cb) {
     async.parallel([
         function(callback) {
-          productCreate('Tomatoes', false, 5, '2022-06-18', [categories[1],], callback);
+          productCreate('Tomatoes', '', 5, '2022-06-18', categories[1], callback);
         },
         function(callback) {
-          productCreate('Courgettes', false, 3, '2022-06-13', [categories[1],], callback);
+          productCreate('Courgettes', '', 3, '2022-06-13', categories[1], callback);
         },
         function(callback) {
-          productCreate('Pineapple', false, 1, '2022-06-15', [categories[1],], callback);
+          productCreate('Pineapple', '', 1, '2022-06-15', categories[1], callback);
         },
         function(callback) {
-          productCreate('Milk', false, 2, '2022-06-18', [categories[0],], callback);
+          productCreate('Milk', '', 2, '2022-06-18', categories[0], callback);
         },
         function(callback) {
-          productCreate('Cheddar', false, 1, '2022-06-15', [categories[0],], callback);
+          productCreate('Cheddar', '', 1, '2022-06-15', categories[0], callback);
         },
         function(callback) {
-          productCreate('Camembert', false, 1, '2022-06-17', [categories[0],], callback);
+          productCreate('Camembert', '', 1, '2022-06-17', categories[0], callback);
         },
         function(callback) {
-          productCreate('Bleach', false, 3, '2022-03-18', [categories[2],], callback);
+          productCreate('Bleach', '', 3, '2022-03-18', categories[2], callback);
         },
         function(callback) {
-          productCreate('Hand wash', false, 2, '2022-04-09', [categories[2],], callback);
+          productCreate('Hand wash', '', 2, '2022-04-09', categories[2], callback);
         }
         ],
         // optional callback
