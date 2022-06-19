@@ -4,8 +4,26 @@ const { body,validationResult } = require('express-validator');
 
 var async = require('async');
 
-exports.products_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: products_list');
+// var ProductSchema = new Schema(
+//     {
+//         name: { type: String, required: true, minLength: 2, maxLength: 100 },
+//         description: { type: String, maxLength: 100 },
+//         quantity: { type: Number, default: 0 },
+//         date_added: { type: Date, default: new Date },
+//         category: [{ type: Schema.Types.ObjectId, ref: 'Category'}]
+//     }
+// );
+
+exports.products_list = function(req, res, next) {
+    Product
+      .find({}, 'name quantity category')
+      .sort({name: 1})
+      .populate('category')
+      .exec(function (err, products_list) {
+        if (err) { return next(err); }
+        //Successful, so render
+        res.render('products_list', { title: 'Products List', products: products_list });
+      });
 };
 
 exports.product_add_get = function(req, res) {

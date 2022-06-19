@@ -7,3 +7,37 @@
 input {
   margin-bottom: 8px;
 }
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.card {
+  display: flex;
+  width: 150px;
+}
+
+.card--name-container p {
+  margin: 0;
+}
+.name-container--name {
+  text-align: center;
+}
+.name-container--details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.name-container--categories {
+  flex-basis: calc(100% - 24px);
+  padding-left: 0.5rem;
+}
+.name-container--quantity {
+  width: 24px;
+  text-align: center;
+}

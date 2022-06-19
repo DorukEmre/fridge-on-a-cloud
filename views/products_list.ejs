@@ -1,0 +1,44 @@
+<%- include('partials/head.ejs') %>
+	<title><%= title %> | Fridge on a cloud</title>
+</head>
+<body>
+	<%- include('partials/sidebar.ejs') %>
+	<h1><%= title %></h1>
+	
+	<section class="cards-container">
+
+    <% for( let i = 0; i < products.length; i++ ) { %>
+     <div class="card">
+
+			<div class="card--image-container">
+				<a href="<%= products[i].url %>">
+          <img src="products[i].img" alt="" height="150px" width="150px">
+        </a>
+			</div>
+
+			<div class="card--name-container">
+
+				<p class="name-container--name"><a href="<%= products[i].url %>">
+          <%= products[i].name %>
+        </a></p>				
+
+				<div class="name-container--details">
+					<p class="name-container--categories">
+						<% for( let j = 0; j < products[i].category.length; j++ ) { %>
+              <a href="<%= products[i].category[j].url %>"><%= products[i].category[j].name %></a>
+              <% if (j < products[i].category.length - 1) { %>
+                <span>, </span>
+              <% } %>
+						<% } %>
+          </p>
+					<p class="name-container--quantity"><%= products[i].quantity %></p>
+				</div>
+
+			</div>
+
+		 </div>    
+    <% } %>
+
+	</section>	
+
+<%- include('partials/footer.ejs') %>
