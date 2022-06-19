@@ -8,8 +8,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
 
-var indexRouter = require('./routes/index');
-var fridgeRouter = require('./routes/fridge');
+var indexRouter = require('./routes/indexRouter');
+var productRouter = require('./routes/productRouter');
+var categoryRouter = require('./routes/categoryRouter');
 
 var compression = require('compression');
 var helmet = require('helmet');
@@ -43,7 +44,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/fridge', fridgeRouter);
+app.use('/product', productRouter);
+app.use('/category', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
