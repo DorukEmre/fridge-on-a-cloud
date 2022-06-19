@@ -1,0 +1,19 @@
+<%- include('partials/head.ejs') %>
+	<title><%= title %> | Fridge on a cloud</title>
+</head>
+<body class="categories_list">
+	<%- include('partials/sidebar.ejs') %>
+	<h1><%= title %></h1>
+	
+  <h2>List of product categories:</h2>
+
+  <ul>
+    <% for( let i = 0; i < cat.length; i++ ) { %>
+      <li class="categories-li">
+        <p class="categories-li--name"><a href="<%= cat[i].url %>"><%= cat[i].name %></a></p>
+        <p class="categories-li--description"><%= cat[i].description %></p>
+      </li>
+    <% } %>
+  </ul>
+
+<%- include('partials/footer.ejs') %>

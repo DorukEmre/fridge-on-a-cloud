@@ -41,3 +41,10 @@ input {
   width: 24px;
   text-align: center;
 }
+.categories_list h2 {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+.categories-li--name {
+  margin: 0;
+}

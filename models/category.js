@@ -11,7 +11,7 @@ const CategorySchema = new Schema(
 CategorySchema
     .virtual('url')
     .get(function () {
-        return '/fridge/category/' + this._id;
+        return '/category/' + this._id;
     });
 
      

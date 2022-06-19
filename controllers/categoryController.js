@@ -4,10 +4,23 @@ const { body,validationResult } = require('express-validator');
 
 var async = require('async');
 
-exports.categories_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: categories_list');
-};
+// const CategorySchema = new Schema(
+//   {
+//       name: { type: String, required: true, minLength: 3, maxLength: 100 },
+//       description: { type: String, maxLength: 300 }
+//   }
+// );
 
+exports.categories_list = function(req, res, next) {
+  Category
+    .find({}, 'name description')
+    .sort({name: 1})
+    .exec(function (err, categories_list) {
+      if (err) { return next(err); }
+      //Successful, so render
+      res.render('categories_list', { title: 'Categories List', cat: categories_list });
+    });
+};
 exports.category_add_get = function(req, res) {
     res.send('NOT IMPLEMENTED: category_add_get');
 };
