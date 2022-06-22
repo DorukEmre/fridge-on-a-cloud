@@ -1,31 +1,31 @@
 // run the app:
 // DEBUG=fridge-on-a-cloud:* npm start
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 require('dotenv').config()
 
-var indexRouter = require('./routes/indexRouter');
-var productRouter = require('./routes/productRouter');
-var categoryRouter = require('./routes/categoryRouter');
+const indexRouter = require('./routes/indexRouter');
+const productRouter = require('./routes/productRouter');
+const categoryRouter = require('./routes/categoryRouter');
 
-var compression = require('compression');
-var helmet = require('helmet');
+const compression = require('compression');
+const helmet = require('helmet');
 
-var app = express();
+const app = express();
 
 //Import the mongoose module
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 //Set up default mongoose connection
-var mongoDB = process.env.DB_STRING;
+const mongoDB = process.env.DB_STRING;
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 
 //Get the default connection
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));

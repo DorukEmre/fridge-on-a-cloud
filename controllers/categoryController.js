@@ -1,8 +1,8 @@
-var Product = require('../models/product');
-var Category = require('../models/category');
+const Product = require('../models/product');
+const Category = require('../models/category');
 const { body,validationResult } = require('express-validator');
 
-var async = require('async');
+const async = require('async');
 
 // const CategorySchema = new Schema(
 //   {

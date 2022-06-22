@@ -1,7 +1,7 @@
-var Product = require('../models/product');
-var Category = require('../models/category');
+const Product = require('../models/product');
+const Category = require('../models/category');
 
-var async = require('async');
+const async = require('async');
 
 exports.home = function(req, res) {
 
