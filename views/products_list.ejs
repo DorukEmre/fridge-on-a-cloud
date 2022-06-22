@@ -10,11 +10,19 @@
     <% for( let i = 0; i < products.length; i++ ) { %>
      <div class="card">
 
-			<div class="card--image-container">
-				<a href="<%= products[i].url %>">
-          <img src="products[i].imgsrc" alt="" height="150px" width="150px">
-        </a>
-			</div>
+      <div class="card--image-container">
+
+        <% if (products[i].image) { %>
+          <a href="<%= products[i].url %>">
+            <img src="<%= products[i].image.imageFolder + products[i].image. filename200 %>" alt="" height="150px" width="150px">
+          </a>
+        <% } else { %>
+          <a href="<%= products[i].url %>">
+            <img src="" alt="" height="150px" width="150px">
+          </a>
+        <% } %>       
+  
+      </div>
 
 			<div class="card--name-container">
 

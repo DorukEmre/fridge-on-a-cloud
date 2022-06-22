@@ -9,9 +9,13 @@
   <div class="product_detail">
 
     <div class="card--image-container">
-      <a href="<%= product.url %>">
-        <img src="product.imgsrc" alt="" height="300px" width="300px">
-      </a>
+
+      <% if (product.image) { %>
+        <img src="<%= product.image.imageFolder + product.image. filename200 %>" alt="" height="200px" width="200px">
+      <% } else { %>
+        <img src="" alt="" height="150px" width="150px">
+      <% } %>      
+
     </div>
 
     <div class="card--name-container">

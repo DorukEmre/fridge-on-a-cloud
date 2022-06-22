@@ -1,24 +1,18 @@
 const Product = require('../models/product');
 const Category = require('../models/category');
 const { body,validationResult } = require('express-validator');
+const path = require('path')
+const Resize = require('../middleware/resize');
+const Image = require('../models/image');
 
 const async = require('async');
-
-// const ProductSchema = new Schema(
-//     {
-//         name: { type: String, required: true, minLength: 2, maxLength: 100 },
-//         imgsrc: { type: String, maxLength: 100 },
-//         quantity: { type: Number, default: 0 },
-//         date_added: { type: Date, default: new Date },
-//         category: [{ type: Schema.Types.ObjectId, ref: 'Category'}]
-//     }
-// );
 
 exports.products_list = function(req, res, next) {
   Product
     .find({}, 'name quantity category')
     .sort({name: 1})
     .populate('category')
+    .populate('image')
     .exec(function (err, products_list) {
       if (err) { return next(err); }
       //Successful, so render
@@ -32,9 +26,6 @@ exports.product_add_get = function(req, res, next) {
       categories: function(callback) {
           Category.find(callback);
       },
-      // today: function(callback) {
-      //   new Date();
-      // },
   }, function(err, results) {
       if (err) { return next(err); }
       res.render('product_form', { title: 'Add Product', cat: results.categories });
@@ -52,62 +43,73 @@ exports.product_add_post = [
   body('date_added', 'Invalid date').optional({ checkFalsy: true }).isISO8601().toDate(),
   // body('category', 'Category invalid.').trim().isLength({ min: 1 }).escape(),
 
+  async (req, res, next) => {
+    if(req.fileValidationError) {
+      return res.end(req.fileValidationError);
+    }
+    if (!req.file) {
+      res.status(401).json({error: 'Please provide an image'});
+    }
+  
+    const imageFolder = '/uploads/';
+    const imagePath = path.join(__dirname, `/../public${imageFolder}`);
+    
+    const fileUpload200 = new Resize(imagePath, 200);
+    const filename200 = await fileUpload200.save(req.file.buffer);
+    const fileUpload1000 = new Resize(imagePath, 1000);
+    const filename1000 = await fileUpload1000.save(req.file.buffer);
+  
+    const newImage = new Image(
+      {
+        contentType: 'image/jpeg',
+        path: imagePath,
+        imageFolder: imageFolder,
+        filename200: filename200,
+        filename1000: filename1000
+      }
+    );  
+    req.file.newImage = newImage // To add to Product model in next middleware
+    
+    newImage.save((err) => {
+        // err ? console.log(err) : res.redirect("/");
+        if (err) { return next(err); }
+    });
+    next();
+  },
+
   // Process request after validation and sanitization.
   (req, res, next) => {
-    console.log('processing request')
-
       // Extract the validation errors from a request.
       const errors = validationResult(req);
-      
-      // Check if Genre with same name already exists.
-      // Genre.findOne({ 'name': req.body.name })
-      // .exec( function(err, found_genre) {
-      // if (err) { return next(err); }
-      //   if (found_genre) {
-      //     // Genre exists, redirect to its detail page.
-      //     res.redirect(found_genre.url);
-      //     }
-      //   else {
-      //     genre.save(function (err) {
-      //       if (err) { return next(err); }
-      //         // Genre saved. Redirect to genre detail page.
-      //         res.redirect(genre.url);
-      //       });
-      //   }
-      // });
 
       // Create a Product object with escaped and trimmed data.
       const product = new Product(
         { name: req.body.name,
-          imgsrc: '',
           quantity: req.body.quantity,
           date_added: (req.body.date_added) ? req.body.date_added : new Date(),
-          category: req.body.category
+          category: req.body.category,
+          image: req.file.newImage
          });
 
       if (!errors.isEmpty()) {
-        console.log('There are errors')
-          // There are errors. Render form again with sanitized values/error messages.
+        // console.log('There are errors')
+        //   // There are errors. Render form again with sanitized values/error messages.
 
-          // Get all authors and genres for form.
-          async.parallel({
+        //   async.parallel({
 
-          }, function(err, results) {
-              if (err) { return next(err); }
+        //   }, function(err, results) {
+        //       if (err) { return next(err); }
 
-              res.render('product_form', { title: 'Add Product', product: product, errors: errors.array() });
-          });
-          return;
+        //       res.render('product_form', { title: 'Add Product', product: product, errors: errors.array() });
+        //   });
+        //   return;
       }
       else {
         // Data from form is valid. Save book.
         product.save(function (err) {
-            console.log('saving')
             if (err) { 
-              console.log('error before saving')
               return next(err); 
             }
-            console.log('redirecting')
             //successful - redirect to new book record.
             res.redirect(product.url);
         });
@@ -136,6 +138,7 @@ exports.product_detail = function(req, res, next) {
   Product
     .findById(req.params.id)
     .populate('category')
+    .populate('image')
     .exec(function(err, results) {
       if (err) { return next(err); }
       res.render('product_detail', { title: results.name, product: results });

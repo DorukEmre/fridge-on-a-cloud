@@ -6,15 +6,16 @@
 
 	<h1><%= title %></h1>
 
-  <form action="" method="post">
+  <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
 
     <label for="name">Product name</label>
     <input type="text" name="name" id="name"  class="form-control" required>
       
     <label for="imgsrc">Image</label><p></p>
-    <input type="file" name="imgsrc" id="imgsrc">
+    <input type="file" name="imgsrc" id="imgsrc" accept="image/*" class="form-control" required>
     <p></p>
+
     <label for="quantity">Quantity</label>
     <input type="number" name="quantity" id="quantity" min="0" value="1" class="form-control">
 

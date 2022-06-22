@@ -1,8 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const upload = require('../middleware/upload');
 
 // Require controller modules.
-var product_controller = require('../controllers/productController');
+const product_controller = require('../controllers/productController');
 
 
 /// PRODUCT ROUTES ///
@@ -14,7 +15,8 @@ router.get('/', product_controller.products_list);
 router.get('/add', product_controller.product_add_get);
 
 // // POST request for creating Product.
-router.post('/add', product_controller.product_add_post);
+// File with name 'imgsrc' from the form is passed into upload/multer
+router.post('/add', upload.single("imgsrc"), product_controller.product_add_post);
 
 // // GET request to delete Product.
 // router.get('/:id/delete', product_controller.product_delete_get);

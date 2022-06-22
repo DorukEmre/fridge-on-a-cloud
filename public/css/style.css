@@ -21,6 +21,10 @@ input {
   width: 150px;
 }
 
+.card--image-container img {
+  object-fit: cover;
+}
+
 .card--name-container p {
   margin: 0;
 }
