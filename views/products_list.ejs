@@ -12,7 +12,7 @@
 
 			<div class="card--image-container">
 				<a href="<%= products[i].url %>">
-          <img src="products[i].img" alt="" height="150px" width="150px">
+          <img src="products[i].imgsrc" alt="" height="150px" width="150px">
         </a>
 			</div>
 
@@ -20,18 +20,18 @@
 
 				<p class="name-container--name"><a href="<%= products[i].url %>">
           <%= products[i].name %>
-        </a></p>				
+        </a></p>
 
 				<div class="name-container--details">
 					<p class="name-container--categories">
-						<% for( let j = 0; j < products[i].category.length; j++ ) { %>
-              <a href="<%= products[i].category[j].url %>"><%= products[i].category[j].name %></a>
-              <% if (j < products[i].category.length - 1) { %>
-                <span>, </span>
-              <% } %>
-						<% } %>
+            <% if (products[i].category) { %>
+             
+              <a href="<%= products[i].category.url %>"><%= products[i].category.name %></a>   
+            <% } %>           
           </p>
-					<p class="name-container--quantity"><%= products[i].quantity %></p>
+					<p class="name-container--quantity">
+            <%= products[i].quantity %>
+          </p>
 				</div>
 
 			</div>

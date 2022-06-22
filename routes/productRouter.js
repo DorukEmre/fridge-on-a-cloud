@@ -29,7 +29,7 @@ router.post('/add', product_controller.product_add_post);
 // router.post('/:id/update', product_controller.product_update_post);
 
 // // GET request for one Product.
-// router.get('/:id', product_controller.product_detail);
+router.get('/:id', product_controller.product_detail);
 
 
 module.exports = router;

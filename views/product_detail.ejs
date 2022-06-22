@@ -1,0 +1,46 @@
+<%- include('partials/head.ejs') %>
+	<title><%= title %> | Fridge on a cloud</title>
+</head>
+<body>
+	<%- include('partials/sidebar.ejs') %>
+
+	<h1><%= title %></h1>
+	
+  <div class="product_detail">
+
+    <div class="card--image-container">
+      <a href="<%= product.url %>">
+        <img src="product.imgsrc" alt="" height="300px" width="300px">
+      </a>
+    </div>
+
+    <div class="card--name-container">
+
+      <p class="name-container--quantity">
+        <%= product.quantity %> available
+      </p>
+      
+      <p class="name-container--date">
+        Added on: <%= product.date_added_formatted %>
+      </p>
+
+      <p class="name-container--categories">
+        <% if (product.category) { %>
+          
+          <a href="<%= product.category.url %>"><%= product.category.name %></a>   
+        <% } %>           
+      </p>
+      
+
+    </div>
+  </div>
+
+  <% if (typeof errors != 'undefined') { %>
+    <ul>
+        <% for( let i = 0; i < errors.length; i++ ) { %>
+            <li><%= errors[i].msg %></li>
+        <% } %>
+    </ul>
+  <% } %>
+
+<%- include('partials/footer.ejs') %>
