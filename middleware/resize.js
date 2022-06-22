@@ -5,9 +5,10 @@ const sharp = require('sharp');
 const path = require('path');
 
 class Resize {
-  constructor(folder, width) {
+  constructor(folder, width, quality) {
     this.folder = folder;
     this.width = width;
+    this.quality = quality;
   }
   async save(buffer) {
     const filename = Resize.filename(this.width);
@@ -22,7 +23,7 @@ class Resize {
         fit: sharp.fit.contain,
         width: this.width
       })
-      .jpeg({ quality: 90, chromaSubsampling: '4:4:4' })
+      .jpeg({ quality: this.quality, chromaSubsampling: '4:4:4' })
       .toFile(filepath);
       
     return filename;

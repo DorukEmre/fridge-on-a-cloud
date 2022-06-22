@@ -54,9 +54,9 @@ exports.product_add_post = [
     const imageFolder = '/uploads/';
     const imagePath = path.join(__dirname, `/../public${imageFolder}`);
     
-    const fileUpload200 = new Resize(imagePath, 200);
+    const fileUpload200 = new Resize(imagePath, 200, 95);
     const filename200 = await fileUpload200.save(req.file.buffer);
-    const fileUpload1000 = new Resize(imagePath, 1000);
+    const fileUpload1000 = new Resize(imagePath, 1000, 90);
     const filename1000 = await fileUpload1000.save(req.file.buffer);
   
     const newImage = new Image(
