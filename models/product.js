@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+const { DateTime } = require("luxon");
 
 var ProductSchema = new Schema(
   {
@@ -17,6 +18,13 @@ ProductSchema
   .get(function () {
     return '/product/' + this._id;
   });
+
+ProductSchema
+  .virtual('date_added_formatted')
+  .get(function () {
+    return this.date_added ? DateTime.fromJSDate(this.date_added).toLocaleString(DateTime.DATE_MED) : '';
+  });
+
 
 //Export model
 module.exports = mongoose.model('Product', ProductSchema);
