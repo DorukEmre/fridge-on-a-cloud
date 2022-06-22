@@ -1,0 +1,30 @@
+<%- include('partials/head.ejs') %>
+	<title><%= title %> | Fridge on a cloud</title>
+</head>
+<body>
+	<%- include('partials/sidebar.ejs') %>
+
+	<h1><%= title %></h1>
+	
+  <form action="" method="post">
+    <div class="form-group">
+
+    <label for="name">Category name</label>
+    <input type="text" name="name" id="name"  class="form-control" required>
+
+    <label for="description">Description</label>
+    <textarea name="description" id="description" class="form-control"></textarea>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    </div>
+  </form>
+  <% if (typeof errors != 'undefined') { %>
+    <ul>
+        <% for( let i = 0; i < errors.length; i++ ) { %>
+            <li><%= errors[i].msg %></li>
+        <% } %>
+    </ul>
+  <% } %>
+
+<%- include('partials/footer.ejs') %>

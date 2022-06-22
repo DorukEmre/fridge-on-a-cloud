@@ -11,10 +11,10 @@ var category_controller = require('../controllers/categoryController');
 router.get('/', category_controller.categories_list);
 
 // // GET request for creating a Category. NOTE This must come before routes that display Category (uses id).
-// router.get('/add', category_controller.category_add_get);
+router.get('/create', category_controller.category_create_get);
 
 // // POST request for creating Category.
-// router.post('/add', category_controller.category_add_post);
+router.post('/create', category_controller.category_create_post);
 
 // // GET request to delete Category.
 // router.get('/:id/delete', category_controller.category_delete_get);
@@ -29,7 +29,7 @@ router.get('/', category_controller.categories_list);
 // router.post('/:id/update', category_controller.category_update_post);
 
 // // GET request for one Category.
-// router.get('/:id', category_controller.category_detail);
+router.get('/:id', category_controller.category_detail);
 
 
 
