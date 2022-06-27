@@ -42,7 +42,6 @@ exports.product_add_post = [
   body('quantity', 'Quantity invalid.').optional({ checkFalsy: true }).toInt().escape(),
   body('date_added', 'Invalid date').optional({ checkFalsy: true }).isISO8601().toDate(),
   // body('category', 'Category invalid.').trim().isLength({ min: 1 }).escape(),
-
   async (req, res, next) => {
     if(req.fileValidationError) {
       return res.end(req.fileValidationError);
@@ -50,13 +49,17 @@ exports.product_add_post = [
     if (!req.file) {
       res.status(401).json({error: 'Please provide an image'});
     }
+
+    const exifParser = require('exif-parser').create(req.file.buffer);
+    const exifData = await exifParser.parse();
+    let dimension = (exifData.tags.ImageWidth > exifData.tags.ImageHeight) ? 'width' : 'height';
   
     const imageFolder = '/uploads/';
     const imagePath = path.join(__dirname, `/../public${imageFolder}`);
     
-    const fileUpload200 = new Resize(imagePath, 200, 95);
+    const fileUpload200 = new Resize(imagePath, dimension, 200, 95);
     const filename200 = await fileUpload200.save(req.file.buffer);
-    const fileUpload1000 = new Resize(imagePath, 1000, 90);
+    const fileUpload1000 = new Resize(imagePath, dimension, 1000, 90);
     const filename1000 = await fileUpload1000.save(req.file.buffer);
   
     const newImage = new Image(
@@ -65,7 +68,12 @@ exports.product_add_post = [
         path: imagePath,
         imageFolder: imageFolder,
         filename200: filename200,
-        filename1000: filename1000
+        filename1000: filename1000,
+        timeUploaded: new Date(),
+        GPSLatitudeRef: (exifData.tags.GPSLatitudeRef) ? exifData.tags.GPSLatitudeRef : '',
+        GPSLatitude: (exifData.tags.GPSLatitude) ? exifData.tags.GPSLatitude : 0,
+        GPSLongitudeRef: (exifData.tags.GPSLongitudeRef) ? exifData.tags.GPSLongitudeRef : '',
+        GPSLongitude: (exifData.tags.GPSLongitude) ? exifData.tags.GPSLongitude : 0
       }
     );  
     req.file.newImage = newImage // To add to Product model in next middleware

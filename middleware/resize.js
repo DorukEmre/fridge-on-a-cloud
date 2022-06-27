@@ -5,13 +5,14 @@ const sharp = require('sharp');
 const path = require('path');
 
 class Resize {
-  constructor(folder, width, quality) {
+  constructor(folder, dimension, measurement, quality) {
     this.folder = folder;
-    this.width = width;
+    this.dimension = dimension;
+    this.measurement = measurement;
     this.quality = quality;
   }
   async save(buffer) {
-    const filename = Resize.filename(this.width);
+    const filename = Resize.filename(this.measurement);
     const filepath = this.filepath(filename);
 
     await sharp(buffer)
@@ -21,16 +22,16 @@ class Resize {
       // })
       .resize({
         fit: sharp.fit.contain,
-        width: this.width
+        [this.dimension]: this.measurement
       })
       .jpeg({ quality: this.quality, chromaSubsampling: '4:4:4' })
       .toFile(filepath);
       
     return filename;
   }
-  static filename(width) {
+  static filename(measurement) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    return `${uniqueSuffix}-${width}.jpg`;
+    return `${uniqueSuffix}-${measurement}.jpg`;
   }
   filepath(filename) {
     return path.resolve(`${this.folder}/${filename}`)

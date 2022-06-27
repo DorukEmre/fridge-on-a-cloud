@@ -7,7 +7,12 @@ const ImageSchema = new Schema(
     path: String,
     imageFolder: String,
     filename200: String,
-    filename1000: String
+    filename1000: String,
+    timeUploaded: Date,
+    GPSLatitudeRef: String,
+    GPSLatitude: Number,
+    GPSLongitudeRef: String,
+    GPSLongitude: Number
   }
 );
 
